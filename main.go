@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"github.com/endersonpro/twittor/handlers"
-	"github.com/endersonpro/twittor/db"
+	"github.com/EndersonPro/golang_course/handlers"
+	"github.com/EndersonPro/golang_course/db"
 )
 
 func main(){
