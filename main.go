@@ -2,8 +2,9 @@ package main
 
 import (
 	"log"
-	"github.com/EndersonPro/golang_course/handlers"
+
 	"github.com/EndersonPro/golang_course/db"
+	"github.com/EndersonPro/golang_course/handlers"
 )
 
 func main(){
