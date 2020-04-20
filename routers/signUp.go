@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/EndersonPro/golang_course/db"
+	"github.com/EndersonPro/golang_course/helpers"
 	"github.com/EndersonPro/golang_course/models"
 )
 
@@ -18,12 +19,12 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(t.Email) == 0 {
-		http.Error(w, "Debe ingresar una contraseña", 400)
+		helpers.HandleResponse(w, r, http.StatusBadRequest, "Debe ingresar una contraseña")
 		return
 	}
 
 	if len(t.Password) < 6 {
-		http.Error(w, "La contraseña debe tener al menos 6 caracteres", 400)
+		helpers.HandleResponse(w, r, http.StatusBadRequest, "La contraseña debe tener al menos 6 caracteres")
 		return
 	}
 
@@ -31,23 +32,20 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	_, encontrado, _ := db.CheckIsExistUser(t.Email)
 
 	if encontrado {
-		http.Error(w, "Ya el usuario existe", 400)
+		helpers.HandleResponse(w, r, http.StatusBadRequest, "Ya el usuario existe")
 		return
 	}
 
 	_, status, err := db.CreateUser(t)
 
 	if err != nil {
-		http.Error(w, "Ocurrio un error: " + err.Error(), 400)
+		helpers.HandleResponse(w, r, http.StatusBadRequest, "Ocurrio un error: " + err.Error())
 		return
 	}
 
 	if !status {
-		http.Error(w, "No se pudo realizar el registro.", 400)
+		helpers.HandleResponse(w, r, http.StatusBadRequest, "No se pudo realizar el registro.")
 		return
 	} 
-
-	w.WriteHeader(http.StatusCreated)
-
-
+	helpers.HandleResponse(w, r, http.StatusCreated, "Usuario creado con exito")
 }
